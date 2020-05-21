@@ -3,12 +3,42 @@
 
 <head>
   <meta charset="UTF-8">
-  <script>
-  </script>
 </head>
 
 <body>
-  <div id="circle"></div>
+  <form>
+    <input type="button" id="change" value="変更">
+  </form>
+  <div id="rectangle">
+    <svg id="svg">
+      <rect id="myBox" x="0" y="0" fill="red" width="100" height="80" />
+    </svg>
+    </svg>
+  </div>
+  <script>
+    let start = Date.now();
+    var rectangleElement = document.getElementById('myBox')
+    // var divWidth = window.screen.availWidth
+    var button = document.getElementById('change').addEventListener('click', () => {
+      // animateのような挙動にはならない。一瞬で枠外に消える
+      // for (var i = 0; i < divWidth; i++) {
+      //   rectangleElement.setAttribute('fill', 'green')
+      //   rectangleElement.setAttribute('transform', `translate(${i},20)`)
+      // }
+      // カックカクの動きになる。滑らかではない。
+      let start = Date.now();
+
+      let timer = setInterval(function () {
+        let timePassed = Date.now() - start;
+        // SVGはスタイルシートでは動かない。
+        // rectangleElement.setAttribute('style', `left:${timePassed / 5}px;`)
+        // svgはxの座標が変わると移動する。
+        // 変更ボタンを連続でクリックすると、残像が見える。残像拳
+        rectangleElement.setAttribute('x', timePassed / 5)
+        if (timePassed > 2000) clearInterval(timer);
+      }, 20);
+    })
+  </script>
 </body>
 
 </html>
